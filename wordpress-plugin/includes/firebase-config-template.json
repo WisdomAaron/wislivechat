@@ -1,0 +1,10 @@
+{
+  "apiKey": "AIzaSyAj-OZt3MnfRPJYt0dqeMVgIc4peJGQWJQ",
+  "authDomain": "wis-livechat.firebaseapp.com",
+  "databaseURL": "https://wis-livechat-default-rtdb.firebaseio.com",
+  "projectId": "wis-livechat",
+  "storageBucket": "wis-livechat.firebasestorage.app",
+  "messagingSenderId": "206365667705",
+  "appId": "1:206365667705:web:53b78c552588f354e87fa8",
+  "measurementId": "G-XC2YSBKQPP"
+}

@@ -1,0 +1,180 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+ChatSession _$ChatSessionFromJson(Map<String, dynamic> json) => ChatSession(
+      id: json['id'] as String,
+      status: json['status'] as String,
+      priority: json['priority'] as String,
+      subject: json['subject'] as String?,
+      startedAt: DateTime.parse(json['started_at'] as String),
+      endedAt: json['ended_at'] == null
+          ? null
+          : DateTime.parse(json['ended_at'] as String),
+      lastActivity: DateTime.parse(json['last_activity'] as String),
+      rating: (json['rating'] as num?)?.toInt(),
+      feedback: json['feedback'] as String?,
+      messageCount: (json['message_count'] as num).toInt(),
+      unreadCount: (json['unread_count'] as num).toInt(),
+      visitor: Visitor.fromJson(json['visitor'] as Map<String, dynamic>),
+      agent: json['agent'] == null
+          ? null
+          : User.fromJson(json['agent'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ChatSessionToJson(ChatSession instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'status': instance.status,
+      'priority': instance.priority,
+      'subject': instance.subject,
+      'started_at': instance.startedAt.toIso8601String(),
+      'ended_at': instance.endedAt?.toIso8601String(),
+      'last_activity': instance.lastActivity.toIso8601String(),
+      'rating': instance.rating,
+      'feedback': instance.feedback,
+      'message_count': instance.messageCount,
+      'unread_count': instance.unreadCount,
+      'visitor': instance.visitor,
+      'agent': instance.agent,
+    };
+
+Visitor _$VisitorFromJson(Map<String, dynamic> json) => Visitor(
+      id: json['id'] as String,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
+      ipAddress: json['ip_address'] as String?,
+      browser: json['browser'] as String?,
+      os: json['os'] as String?,
+      device: json['device'] as String?,
+      country: json['country'] as String?,
+      city: json['city'] as String?,
+      websiteUrl: json['website_url'] as String?,
+      referrerUrl: json['referrer_url'] as String?,
+      isBlocked: json['is_blocked'] as bool,
+      firstVisit: DateTime.parse(json['first_visit'] as String),
+      lastVisit: DateTime.parse(json['last_visit'] as String),
+      visitCount: (json['visit_count'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$VisitorToJson(Visitor instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'email': instance.email,
+      'phone': instance.phone,
+      'ip_address': instance.ipAddress,
+      'browser': instance.browser,
+      'os': instance.os,
+      'device': instance.device,
+      'country': instance.country,
+      'city': instance.city,
+      'website_url': instance.websiteUrl,
+      'referrer_url': instance.referrerUrl,
+      'is_blocked': instance.isBlocked,
+      'first_visit': instance.firstVisit.toIso8601String(),
+      'last_visit': instance.lastVisit.toIso8601String(),
+      'visit_count': instance.visitCount,
+    };
+
+Message _$MessageFromJson(Map<String, dynamic> json) => Message(
+      id: json['id'] as String,
+      chatSessionId: json['chat_session_id'] as String,
+      senderType: json['sender_type'] as String,
+      senderId: json['sender_id'] as String?,
+      senderName: json['sender_name'] as String?,
+      messageType: json['message_type'] as String,
+      content: json['content'] as String,
+      fileUrl: json['file_url'] as String?,
+      fileName: json['file_name'] as String?,
+      fileSize: (json['file_size'] as num?)?.toInt(),
+      fileType: json['file_type'] as String?,
+      isRead: json['is_read'] as bool,
+      readAt: json['read_at'] == null
+          ? null
+          : DateTime.parse(json['read_at'] as String),
+      deliveredAt: json['delivered_at'] == null
+          ? null
+          : DateTime.parse(json['delivered_at'] as String),
+      createdAt: DateTime.parse(json['created_at'] as String),
+    );
+
+Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
+      'id': instance.id,
+      'chat_session_id': instance.chatSessionId,
+      'sender_type': instance.senderType,
+      'sender_id': instance.senderId,
+      'sender_name': instance.senderName,
+      'message_type': instance.messageType,
+      'content': instance.content,
+      'file_url': instance.fileUrl,
+      'file_name': instance.fileName,
+      'file_size': instance.fileSize,
+      'file_type': instance.fileType,
+      'is_read': instance.isRead,
+      'read_at': instance.readAt?.toIso8601String(),
+      'delivered_at': instance.deliveredAt?.toIso8601String(),
+      'created_at': instance.createdAt.toIso8601String(),
+    };
+
+ChatSessionsResponse _$ChatSessionsResponseFromJson(
+        Map<String, dynamic> json) =>
+    ChatSessionsResponse(
+      sessions: (json['sessions'] as List<dynamic>)
+          .map((e) => ChatSession.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      pagination:
+          Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ChatSessionsResponseToJson(
+        ChatSessionsResponse instance) =>
+    <String, dynamic>{
+      'sessions': instance.sessions,
+      'pagination': instance.pagination,
+    };
+
+MessagesResponse _$MessagesResponseFromJson(Map<String, dynamic> json) =>
+    MessagesResponse(
+      messages: (json['messages'] as List<dynamic>)
+          .map((e) => Message.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$MessagesResponseToJson(MessagesResponse instance) =>
+    <String, dynamic>{
+      'messages': instance.messages,
+    };
+
+Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(
+      total: (json['total'] as num).toInt(),
+      limit: (json['limit'] as num).toInt(),
+      offset: (json['offset'] as num).toInt(),
+      hasMore: json['has_more'] as bool,
+    );
+
+Map<String, dynamic> _$PaginationToJson(Pagination instance) =>
+    <String, dynamic>{
+      'total': instance.total,
+      'limit': instance.limit,
+      'offset': instance.offset,
+      'has_more': instance.hasMore,
+    };
+
+SendMessageRequest _$SendMessageRequestFromJson(Map<String, dynamic> json) =>
+    SendMessageRequest(
+      content: json['content'] as String,
+      messageType: json['messageType'] as String,
+      fileUrl: json['fileUrl'] as String?,
+      fileName: json['fileName'] as String?,
+      fileSize: (json['fileSize'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$SendMessageRequestToJson(SendMessageRequest instance) =>
+    <String, dynamic>{
+      'content': instance.content,
+      'messageType': instance.messageType,
+      'fileUrl': instance.fileUrl,
+      'fileName': instance.fileName,
+      'fileSize': instance.fileSize,
+    };

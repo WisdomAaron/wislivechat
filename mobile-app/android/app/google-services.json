@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "206365667705",
+    "project_id": "wis-livechat",
+    "storage_bucket": "wis-livechat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206365667705:android:715fc7b43f93b225e87fa8",
+        "android_client_info": {
+          "package_name": "com.wistech.wislivechat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSu6v-E2LXxCKlHj9tr7_PLZc0whCvjLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

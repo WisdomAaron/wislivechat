@@ -1,0 +1,85 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'user_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+User _$UserFromJson(Map<String, dynamic> json) => User(
+      id: json['id'] as String,
+      email: json['email'] as String,
+      firstName: json['first_name'] as String,
+      lastName: json['last_name'] as String,
+      role: json['role'] as String,
+      isActive: json['is_active'] as bool,
+      isOnline: json['is_online'] as bool,
+      avatarUrl: json['avatar_url'] as String?,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      lastSeen: json['last_seen'] == null
+          ? null
+          : DateTime.parse(json['last_seen'] as String),
+      settings: json['settings'] as Map<String, dynamic>?,
+    );
+
+Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'id': instance.id,
+      'email': instance.email,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
+      'role': instance.role,
+      'is_active': instance.isActive,
+      'is_online': instance.isOnline,
+      'avatar_url': instance.avatarUrl,
+      'created_at': instance.createdAt.toIso8601String(),
+      'last_seen': instance.lastSeen?.toIso8601String(),
+      'settings': instance.settings,
+    };
+
+AuthResponse _$AuthResponseFromJson(Map<String, dynamic> json) => AuthResponse(
+      message: json['message'] as String,
+      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      tokens: AuthTokens.fromJson(json['tokens'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$AuthResponseToJson(AuthResponse instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'user': instance.user,
+      'tokens': instance.tokens,
+    };
+
+AuthTokens _$AuthTokensFromJson(Map<String, dynamic> json) => AuthTokens(
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
+      expiresIn: json['expiresIn'] as String,
+    );
+
+Map<String, dynamic> _$AuthTokensToJson(AuthTokens instance) =>
+    <String, dynamic>{
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
+      'expiresIn': instance.expiresIn,
+    };
+
+LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) => LoginRequest(
+      email: json['email'] as String,
+      password: json['password'] as String,
+    );
+
+Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'password': instance.password,
+    };
+
+RefreshTokenRequest _$RefreshTokenRequestFromJson(Map<String, dynamic> json) =>
+    RefreshTokenRequest(
+      refreshToken: json['refreshToken'] as String,
+    );
+
+Map<String, dynamic> _$RefreshTokenRequestToJson(
+        RefreshTokenRequest instance) =>
+    <String, dynamic>{
+      'refreshToken': instance.refreshToken,
+    };
