@@ -7,6 +7,21 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Add process error handlers
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
+console.log('🚀 Starting WisChat Backend...');
+console.log('📦 Environment:', process.env.NODE_ENV || 'production');
+console.log('🔌 Port:', PORT);
+
 // Middleware
 app.use(helmet());
 app.use(compression());
@@ -154,10 +169,23 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+// Start server with error handling
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 WisChat Backend running on port ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'production'}`);
   console.log(`🔗 Health check: http://localhost:${PORT}/api/v1/health`);
+  console.log(`✅ Server started successfully!`);
+}).on('error', (err) => {
+  console.error('❌ Server failed to start:', err);
+  process.exit(1);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('🛑 SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    console.log('✅ Process terminated');
+  });
 });
 
 module.exports = app;
