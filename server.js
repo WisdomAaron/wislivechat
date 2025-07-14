@@ -5,18 +5,24 @@ const PORT = process.env.PORT || 10000;
 console.log('🚀 Starting WisChat Backend...');
 console.log('🔌 Port:', PORT);
 
-// CORS middleware (manual implementation to avoid dependency issues)
+// Enhanced CORS middleware
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control');
+  res.setHeader('Access-Control-Allow-Credentials', 'false');
+  res.setHeader('Access-Control-Max-Age', '86400');
 
-  // Handle preflight requests
+  // Handle preflight OPTIONS requests
   if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
+    console.log('🔧 CORS preflight request for:', req.url);
+    res.status(200).end();
+    return;
   }
+
+  console.log('📡 Request:', req.method, req.url);
+  next();
 });
 
 // Basic middleware
@@ -37,13 +43,24 @@ app.get('/', (req, res) => {
   });
 });
 
+// CORS test endpoint
+app.get('/api/v1/cors-test', (req, res) => {
+  res.json({
+    message: 'CORS is working!',
+    timestamp: new Date().toISOString(),
+    headers: req.headers,
+    method: req.method
+  });
+});
+
 // Health check endpoint
 app.get('/api/v1/health', (req, res) => {
   res.json({
     status: 'OK',
     message: 'WisChat Backend is running!',
     timestamp: new Date().toISOString(),
-    version: '1.0.0'
+    version: '1.0.0',
+    cors: 'enabled'
   });
 });
 
