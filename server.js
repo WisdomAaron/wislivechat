@@ -1,37 +1,59 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const compression = require('compression');
-require('dotenv').config();
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Add process error handlers
-process.on('uncaughtException', (error) => {
-  console.error('Uncaught Exception:', error);
-  process.exit(1);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  process.exit(1);
-});
-
 console.log('🚀 Starting WisChat Backend...');
-console.log('📦 Environment:', process.env.NODE_ENV || 'production');
-console.log('🔌 Port:', PORT);
 
-// Middleware
-app.use(helmet());
-app.use(compression());
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+try {
+  const express = require('express');
+  console.log('✅ Express loaded');
+
+  const cors = require('cors');
+  console.log('✅ CORS loaded');
+
+  const helmet = require('helmet');
+  console.log('✅ Helmet loaded');
+
+  const compression = require('compression');
+  console.log('✅ Compression loaded');
+
+  require('dotenv').config();
+  console.log('✅ Dotenv loaded');
+
+  const app = express();
+  const PORT = process.env.PORT || 3000;
+
+  console.log('📦 Environment:', process.env.NODE_ENV || 'production');
+  console.log('🔌 Port:', PORT);
+
+  // Add process error handlers
+  process.on('uncaughtException', (error) => {
+    console.error('❌ Uncaught Exception:', error);
+    process.exit(1);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+    process.exit(1);
+  });
+
+  // Middleware
+  console.log('🔧 Setting up middleware...');
+
+  app.use(helmet());
+  console.log('✅ Helmet middleware added');
+
+  app.use(compression());
+  console.log('✅ Compression middleware added');
+
+  app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  console.log('✅ CORS middleware added');
+
+  app.use(express.json());
+  console.log('✅ JSON middleware added');
+
+  app.use(express.urlencoded({ extended: true }));
+  console.log('✅ URL encoded middleware added');
 
 // Health check endpoint
 app.get('/api/v1/health', (req, res) => {
@@ -169,23 +191,31 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server with error handling
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 WisChat Backend running on port ${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'production'}`);
-  console.log(`🔗 Health check: http://localhost:${PORT}/api/v1/health`);
-  console.log(`✅ Server started successfully!`);
-}).on('error', (err) => {
-  console.error('❌ Server failed to start:', err);
-  process.exit(1);
-});
+  // Start server with error handling
+  console.log('🚀 Starting server...');
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('🛑 SIGTERM received, shutting down gracefully');
-  server.close(() => {
-    console.log('✅ Process terminated');
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 WisChat Backend running on port ${PORT}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'production'}`);
+    console.log(`🔗 Health check: http://localhost:${PORT}/api/v1/health`);
+    console.log(`✅ Server started successfully!`);
+  }).on('error', (err) => {
+    console.error('❌ Server failed to start:', err);
+    process.exit(1);
   });
-});
 
-module.exports = app;
+  // Graceful shutdown
+  process.on('SIGTERM', () => {
+    console.log('🛑 SIGTERM received, shutting down gracefully');
+    server.close(() => {
+      console.log('✅ Process terminated');
+    });
+  });
+
+  module.exports = app;
+
+} catch (error) {
+  console.error('❌ FATAL ERROR during startup:', error);
+  console.error('❌ Stack trace:', error.stack);
+  process.exit(1);
+}
