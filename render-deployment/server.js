@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
   res.json({
     message: 'WisChat Backend API',
     status: 'running',
-    version: '1.0.0',
+    version: '1.0.1',
     endpoints: [
       'GET /api/v1/health',
       'GET /api/v1/firebase/config',
@@ -144,6 +144,11 @@ app.use('*', (req, res) => {
       'POST /api/v1/firebase/notifications/test'
     ]
   });
+});
+
+// Test route to verify deployment
+app.get('/test', (req, res) => {
+  res.json({ message: 'Test route working!', timestamp: new Date().toISOString() });
 });
 
 // Admin Dashboard Route
